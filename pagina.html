@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Mi Autobiografía</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+           
+            --color-crema: #b1a185;
+            --color-oliva: #7f8b53;
+            --color-sabio: #7b7957;
+            --color-terracota: #714e31;
+            --color-profundo: #474532;
+            
+            background-color: var(--color-profundo);
+            color: #f2ede4;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .moving-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .moving-bg::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 20% 30%, var(--color-terracota) 0%, var(--color-profundo) 45%, var(--color-sabio) 80%);
+            animation: waveMovement 22s ease-in-out infinite alternate;
+            opacity: 0.7;
+        }
+
+        .moving-bg::after {
+            content: "";
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: repeating-linear-gradient(45deg, rgba(123, 121, 87, 0.15) 0px, rgba(123, 121, 87, 0.15) 2px, transparent 2px, transparent 8px);
+            animation: drift 30s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes waveMovement {
+            0% {
+                transform: translate(0%, 0%) scale(1);
+                filter: blur(0px);
+            }
+            50% {
+                transform: translate(3%, 2%) scale(1.02);
+                filter: blur(2px);
+            }
+            100% {
+                transform: translate(-2%, 3%) scale(1.05);
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0%, 0%) rotate(0deg);
+            }
+            100% {
+                transform: translate(5%, 5%) rotate(5deg);
+            }
+        }
+
+        
+        .floating-particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(177, 161, 133, 0.5);
+            border-radius: 50%;
+            filter: blur(3px);
+            animation: floatParticle 15s infinite ease-in-out;
+            box-shadow: 0 0 12px rgba(127, 139, 83, 0.4);
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0vh) translateX(0vw) scale(1);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20vw) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+       
+        .glass-card {
+            background: rgba(71, 69, 50, 0.55);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            border: 1px solid rgba(177, 161, 133, 0.45);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        
+        header {
+            padding: 2rem 0 1rem;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(71, 69, 50, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 80px;
+            padding: 0.8rem 2rem;
+            border: 1px solid var(--color-crema);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--color-crema), var(--color-oliva));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #f2ede4;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-crema);
+            text-shadow: 0 0 8px rgba(177, 161, 133, 0.6);
+        }
+
+        
+        .hero-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+            margin: 3rem 0 4rem;
+        }
+
+        .foto-container {
+            flex: 1;
+            min-width: 240px;
+            text-align: center;
+        }
+
+        .foto-wrapper {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-crema), var(--color-terracota));
+            padding: 4px;
+            animation: gentleFloat 5s ease-in-out infinite;
+            box-shadow: 0 20px 30px -10px rgba(113, 78, 49, 0.5);
+        }
+
+        .foto-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--color-profundo);
+            transition: transform 0.3s;
+        }
+
+        .foto-wrapper:hover img {
+            transform: scale(1.02);
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .bio-info {
+            flex: 2;
+        }
+
+        .bio-info h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #e6d5bc, var(--color-crema), #b1a185);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #d6c6ae;
+            margin-bottom: 1.2rem;
+            border-left: 3px solid var(--color-oliva);
+            padding-left: 1rem;
+        }
+
+        .biografia-texto {
+            margin-top: 1rem;
+            line-height: 1.6;
+            color: #e6dfd3;
+        }
+
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.8rem 0;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background: rgba(71, 69, 50, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 0.7rem 1.4rem;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #f2ede4;
+            font-weight: 600;
+            transition: 0.2s;
+            border: 1px solid var(--color-crema);
+        }
+
+        .social-btn i {
+            font-size: 1.3rem;
+            color: var(--color-crema);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-4px);
+            background: rgba(127, 139, 83, 0.6);
+            border-color: var(--color-oliva);
+            box-shadow: 0 5px 15px rgba(113, 78, 49, 0.4);
+        }
+
+        
+        .grid-2cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .grid-3cols-fotos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            display: inline-block;
+            background: linear-gradient(120deg, #fff, var(--color-crema));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-left: 5px solid var(--color-oliva);
+            padding-left: 1rem;
+        }
+
+        
+        .person-card {
+            background: rgba(71, 69, 50, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(177, 161, 133, 0.3);
+        }
+
+        .person-card:hover {
+            transform: scale(1.02) translateY(-5px);
+            border-color: var(--color-crema);
+            box-shadow: 0 20px 30px -12px rgba(177, 161, 133, 0.3);
+        }
+
+        .person-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .person-role {
+            font-size: 0.8rem;
+            background: rgba(127, 139, 83, 0.4);
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.5rem;
+        }
+
+        
+        .roblox-section {
+            background: rgba(71, 69, 50, 0.6);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(177, 161, 133, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .roblox-games {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .roblox-game {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 2rem;
+            padding: 0.7rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+            border: 1px solid var(--color-crema);
+        }
+
+        .roblox-game i {
+            font-size: 1.7rem;
+            color: #ff5e00;
+        }
+
+        .roblox-game:hover {
+            transform: scale(1.03);
+            background: #714e31;
+        }
+
+        .btn-roblox {
+            background: #1a1a2e;
+            padding: 0.7rem 1.6rem;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--color-crema);
+            transition: 0.2s;
+        }
+
+        .btn-roblox:hover {
+            background: #7f8b53;
+            gap: 15px;
+        }
+
+       
+        .extra-photo-card {
+            background: rgba(71, 69, 50, 0.6);
+            border-radius: 2rem;
+            overflow: hidden;
+            backdrop-filter: blur(6px);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(177, 161, 133, 0.4);
+        }
+
+        .extra-photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -8px rgba(0,0,0,0.5);
+            border-color: var(--color-crema);
+        }
+
+        .extra-photo-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .extra-photo-caption {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+            background: rgba(0,0,0,0.3);
+        }
+
+        
+        .steam-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .game-item {
+            background: rgba(71, 69, 50, 0.7);
+            border-radius: 2rem;
+            padding: 1rem 1.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            transition: 0.2s;
+            border: 1px solid #7b7957;
+        }
+
+        .game-item i {
+            font-size: 2rem;
+            color: var(--color-crema);
+        }
+
+        .game-item:hover {
+            background: #5e5c3f;
+            transform: translateY(-3px);
+        }
+
+        .steam-btn {
+            background: #474532;
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #f2ede4;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            border: 1px solid var(--color-crema);
+        }
+
+        .steam-btn:hover {
+            background: #7f8b53;
+            gap: 18px;
+        }
+
+        
+        .gustos-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .badge-gusto {
+            background: rgba(177, 161, 133, 0.15);
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            border: 1px solid rgba(177, 161, 133, 0.5);
+            transition: 0.2s;
+            cursor: default;
+        }
+
+        .badge-gusto:hover {
+            background: var(--color-oliva);
+            color: #1e1c14;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(177, 161, 133, 0.3);
+        }
+
+        @media (max-width: 780px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .bio-info h1 {
+                font-size: 2.4rem;
+            }
+            .nav-bar {
+                border-radius: 30px;
+                justify-content: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="moving-bg"></div>
+<div class="floating-particles" id="particlesContainer"></div>
+
+<header>
+    <div class="container">
+        <div class="nav-bar">
+            <div class="logo"><i class="fas fa-computer"></i>Jaimechan1506</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#biografia">Biografía</a></li>
+                <li><a href="#compañeros">Compañeros</a></li>
+                <li><a href="#profesores">Profesores</a></li>
+                <li><a href="#juegos">Juegos</a></li>
+                <li><a href="#fotosextra">Fotos</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+       
+        <section id="inicio" class="hero-section">
+            <div class="foto-container">
+                <div class="foto-wrapper">
+                    <img src="jaime.jpg.jpg" alt="Foto de perfil" id="profile-img">
+                </div>
+                <p style="margin-top: 12px; font-size: 0.8rem;"><i class="fas fa-music"></i>Jaimechan1506</p>
+            </div>
+            <div class="bio-info">
+                <h1>Jaime Chavez</h1>
+                <div class="tagline"> Musico | Programdor </div>
+                <div class="biografia-texto">
+                    <p> Estudiante apasionado por el desarrollo de software y estudiante de musica</p>
+                    <p style="margin-top: 12px;">Comparto mis gustos, compañeros y profesores</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.youtube.com/@Jaimechan-ov1tu" class="social-btn" id="youtubeLink" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                    <a href="https://www.linkedin.com/in/jaime-andres-chavez-ramos-b74427418/?isSelfProfile=true" class="social-btn" id="linkedinLink" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                    <a href="https://www.instagram.com/jaimechan1506/" class="social-btn" id="instagramLink" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                </div>
+                <small>Jaimechan1506</small>
+            </div>
+        </section>
+
+       
+        <section id="biografia" class="animate-on-scroll">
+            <h2 class="section-title">Sobre mi</h2>
+            <div class="glass-card" style="padding: 2rem;">
+                <p>Me llamo Jaime Andres Chavez Ramos tengo 17 años y soy estudiante de Ciencia de la Computacion en la universidad UCSP  </p>
+                <p style="margin-top: 1rem;"> <strong></strong> “Crear con consciencia, compartir con calma”, "Desarrollo de software</p>
+            </div>
+        </section>
+
+        
+        <section id="compañeros" class="animate-on-scroll">
+            <h2 class="section-title"> Compañeros </h2>
+            <div class="grid-2cols">
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-music"></i> Favio Mendigure <span class="person-role">Compañero UCSP</span></div>
+                    <a href="https://faviom15.github.io/favio-cesar-portfolio/" class="social-btn" id="youtubeLink" target="_blank"><i class="fab fa-youtube"></i> PAGINA</a>
+                </div>
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-code-branch"></i> Fabrizio Flores <span class="person-role">Compañero UCSP</span></div>
+                    <a href="https://fabrizioflv.github.io/fabrizio-web/" class="social-btn" id="youtubeLink" target="_blank"><i class="fab fa-youtube"></i> PAGINA</a>
+                </div>
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-code-branch"></i> Facundo Calle <span class="person-role">Compañero UCSP</span></div>
+                    <a href="https://www.youtube.com/@Jaimechan-ov1tu" class="social-btn" id="youtubeLink" target="_blank"><i class="fab fa-youtube"></i> PAGINA</a>
+                </div>
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-code-branch"></i> Eros Caldenhoven <span class="person-role">Compañero UCSP</span></div>
+                    <a href="https://www.youtube.com/@Jaimechan-ov1tu" class="social-btn" id="youtubeLink" target="_blank"><i class="fab fa-youtube"></i> PAGINA</a>
+                </div>
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-music"></i> Jose Mendigure <span class="person-role">Compañero UCSP</span></div>
+                    <a href="https://j0sm160.github.io/" class="social-btn" id="youtubeLink" target="_blank"><i class="fab fa-youtube"></i> PAGINA</a>
+                </div>
+            </div>
+        </section>
+
+       
+        <section id="profesores" class="animate-on-scroll">
+            <h2 class="section-title">Profesores</h2>
+            <div class="grid-2cols">
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-brain"></i> Ernesto Cuadros <span class="person-role">Introducion a la Computacion</span></div>
+                    <a href="https://pe.linkedin.com/in/ecuadrosv" class="social-btn" id="linkedinLink" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-brain"></i> Prof.Kelly Vizconde  <span class="person-role">Programacion</span></div>
+                    <a href="https://www.linkedin.com/in/kelly-vizconde-la-motta-3a57a4143/" class="social-btn" id="linkedinLink" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                </div>
+                
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-brain"></i> Prof. Fiorella Rendon Garcia <span class="person-role">Matematicas</span></div>
+                    <a href="https://www.linkedin.com/in/fiorella-mar%C3%ADa-rend%C3%B3n-garc%C3%ADa-7aa9b7374/" class="social-btn" id="linkedinLink" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                </div>
+                <div class="person-card">
+                    <div class="person-name"><i class="fas fa-brain"></i> Prof Sol Tejada <span class="person-role">Logica</span></div>
+                    <a href="https://www.linkedin.com/in/solange-tejada/" class="social-btn" id="linkedinLink" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+       
+        <section class="animate-on-scroll">
+            <h2 class="section-title">Mis pasiones & gustos</h2>
+            <div class="gustos-section">
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Programación</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Bajo Electrico</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i>Oboe</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i>Inka Chips</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Flauta transversal</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Bateria</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Brawhalla</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Brawl Stars</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Pixel Gun 3D</span>
+                <span class="badge-gusto"><i class="fas fa-headphones"></i> Dirty Loops</span>
+            </div>
+        </section>
+
+
+        
+        <section id="fotosextra" class="animate-on-scroll">
+            <h2 class="section-title">Momentos especiales</h2>
+            <div class="grid-3cols-fotos">
+                
+                <div class="extra-photo-card">
+                    <img src="sir rolanado.png" alt="Foto extra 1" class="extra-photo-img" id="extraPhoto1">
+                    <div class="extra-photo-caption">Brawhalla</div>
+                </div>
+                
+                <div class="extra-photo-card">
+                    <img src="kirk.png" alt="Foto extra 2" class="extra-photo-img" id="extraPhoto2">
+                    <div class="extra-photo-caption">Kirk</div>
+                </div>
+                
+                <div class="extra-photo-card">
+                    <img src="chan.png" alt="Foto extra 3" class="extra-photo-img" id="extraPhoto3">
+                    <div class="extra-photo-caption">Jaimechannnnn</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 0.8rem; margin: 1rem 0;"><i class="fas fa-edit"></i> </p>
+        </section>
+
+       
+        <section id="juegos" class="animate-on-scroll">
+            <h2 class="section-title"> Steam</h2>
+            <div class="steam-grid">
+                <div class="game-item"><i class="fab fa-steam"></i> <span>Brawhalla</span> <i class="fas fa-skull"></i></div>
+                <div class="game-item"><i class="fab fa-steam"></i> <span>Gta V</span> <i class="fas fa-dragon"></i></div>
+                <div class="game-item"><i class="fab fa-steam"></i> <span>Sea Of Thieves</span> <i class="fas fa-seedling"></i></div>
+                <div class="game-item"><i class="fab fa-steam"></i> <span>Muck</span> <i class="fas fa-bug"></i></div>
+                <div class="game-item"><i class="fab fa-steam"></i> <span>The forest</span> <i class="fas fa-feather-alt"></i></div>
+            </div>
+            <div class="steam-embed" style="margin-top: 1rem;">
+                <a href="https://steamcommunity.com/profiles/76561199190521169/" class="steam-btn" id="steamProfileLink" target="_blank"><i class="fab fa-steam"></i> Explorar mi perfil de Steam →</a>
+                <p style="font-size: 0.75rem; margin-top: 12px;"></p>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>Ostias <i class="fas fa-music" style="color: #b1a185;"></i>Te amo</p>
+        <p style="margin-top: 8px;"><i class="fas fa-palette"></i>jaimechan1506</p>
+    </div>
+</footer>
+
+<script>
+    
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+    
+    animatedElements.forEach(el => observer.observe(el));
+    
+   
+    function createParticles() {
+        const container = document.getElementById('particlesContainer');
+        const colors = ['#b1a185', '#7f8b53', '#7b7957', '#714e31'];
+        for (let i = 0; i < 60; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            const size = Math.random() * 12 + 4;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.bottom = '-10vh';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = Math.random() * 12 + 8 + 's';
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            container.appendChild(particle);
+        }
+    }
+    
+   
+    const socialDemo = () => {
+        const youtube = document.getElementById('youtubeLink');
+        const linkedin = document.getElementById('linkedinLink');
+        const instagram = document.getElementById('instagramLink');
+        const steam = document.getElementById('steamProfileLink');
+        const roblox = document.getElementById('robloxProfileLink');
+        
+        const checkAndWarn = (element, name) => {
+            if(element && (element.getAttribute('href') === '#' || element.getAttribute('href') === '' || element.getAttribute('href') === null)) {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert(`🌐 Configura tu ${name}: edita el atributo href en el código HTML.`);
+                });
+            }
+        };
+        checkAndWarn(youtube, 'YouTube');
+        checkAndWarn(linkedin, 'LinkedIn');
+        checkAndWarn(instagram, 'Instagram');
+        checkAndWarn(steam, 'Perfil de Steam');
+        checkAndWarn(roblox, 'Perfil de Roblox');
+        
+        const profileImg = document.getElementById('profile-img');
+        if(profileImg && profileImg.src.includes('placehold.co')) {
+            profileImg.style.cursor = 'pointer';
+            profileImg.addEventListener('click', () => {
+                alert('📸 Reemplaza esta imagen: cambia el atributo "src" por la ruta de tu foto personal.');
+            });
+        }
+      
+        const extraImgs = ['extraPhoto1', 'extraPhoto2', 'extraPhoto3'];
+        extraImgs.forEach(id => {
+            const imgEl = document.getElementById(id);
+            if(imgEl && imgEl.src.includes('placehold.co')) {
+                imgEl.style.cursor = 'pointer';
+                imgEl.addEventListener('click', () => {
+                    alert('');
+                });
+            }
+        });
+    };
+    
+    window.addEventListener('DOMContentLoaded', () => {
+        createParticles();
+        socialDemo();
+        console.log('', 'color: #b1a185; font-size: 14px');
+    });
+    
+    const badges = document.querySelectorAll('.badge-gusto');
+    badges.forEach(b => {
+        b.addEventListener('mouseenter', () => b.style.transform = 'scale(1.08)');
+        b.addEventListener('mouseleave', () => b.style.transform = 'scale(1)');
+    });
+</script>
+</body>
+</html>
+```
